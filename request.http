@@ -1,0 +1,11 @@
+GET https://be-explore-banyumas.vercel.app/api/v1/admin/whoami
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTcwMTQyNDExNiwiZXhwIjoxNzAxNTEwNTE2fQ.xi6Ujo9B-CTIl0xG7oy7gFnS1tFttq3_55vI4rMJ250
+
+###
+POST https://be-explore-banyumas.vercel.app/api/v1/admin/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin"
+}
