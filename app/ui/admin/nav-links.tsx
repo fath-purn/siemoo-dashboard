@@ -5,16 +5,13 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import Icon from "@mdi/react";
 import {
-  mdiImageFilterHdrOutline,
-  mdiCityVariant,
-  mdiAccountGroupOutline,
-  mdiMapMarkerRadiusOutline,
   mdiHomeOutline,
   mdiAccount,
   mdiAccountGroup,
   mdiBookEducationOutline,
   mdiTestTube,
   mdiStoreOutline,
+  mdiHospital,
 } from "@mdi/js";
 
 // Map of links to display in the side navigation.
@@ -37,6 +34,11 @@ const links = [
     name: "Lapak",
     href: "/dashboard/lapak",
     icon: mdiStoreOutline ,
+  },
+  {
+    name: "Penyakit",
+    href: "/dashboard/penyakit",
+    icon: mdiHospital ,
   },
 ];
 

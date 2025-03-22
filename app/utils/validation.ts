@@ -27,3 +27,8 @@ export const lapak = z.object({
     kuantiti: z.enum(['Kg', 'Liter', 'Buah', 'Ekor']),
     stok: z.number(),
 });
+
+export const cocoblog = z.object({
+    judul: z.string().min(1, { message: "Judul harus diisi" }),
+    isi: z.string().min(1, { message: "Deksripsi harus diisi" }),
+  });

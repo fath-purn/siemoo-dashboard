@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { poppins } from "@/app/ui/fonts";
 import "../../globals.css";
 import SideNav from "@/app/ui/admin/sidenav";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata: Metadata = {
   title: {
@@ -22,6 +24,7 @@ export default function RootLayout({
       <body className={`${poppins.className}`}>
         <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
           <div className="w-full flex-none md:w-64">
+        <ToastContainer />
             <SideNav />
           </div>
           <div className="flex-grow p-6 md:overflow-y-auto md:p-12">

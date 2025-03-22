@@ -10,7 +10,9 @@ import {
   UPDATEPENGUJIAN,
   POSTLAPAK,
   UPDATELAPAK,
+  POSTFILE,
 } from "@/app/utils/method";
+import { toast } from "react-toastify";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -311,6 +313,48 @@ export async function formUpdateHandlerLapak(
       };
     }
   } catch (error) {
+    return { success: false, message: "Form submission failed" };
+  }
+}
+
+export async function formSubmitHandlerFile(
+  state:
+    | { success: boolean; data: any; message?: undefined }
+    | { success: boolean; message: any; data?: undefined }
+    | undefined,
+
+  formData: FormData
+): Promise<
+  | { success: boolean; data: any; message?: undefined }
+  | { success: boolean; message: any; data?: undefined }
+> {
+  try {
+    toast.info("Loading...");
+
+    const code = await POSTFILE("POSTFILE", Object.fromEntries(formData));
+
+    if (code && "success" in code && code.success === true) {
+      toast.success(code.message);
+      window.location.href = `/admin/${code.params}`;
+      return code;
+    }
+
+    if (code && "success" in code && code.success === false) {
+      if (Array.isArray(code.message)) {
+        toast.error(code.message);
+        return { success: false, message: code.message };
+      } else {
+        toast.error(code.message);
+        return { success: false, message: code.message };
+      }
+    }
+
+    console.log("empat");
+
+    toast.success(code.message);
+    return { success: false, message: code.message };
+  } catch (error) {
+    toast.error("Form submission failed");
     return { success: false, message: "Form submission failed" };
   }
 }

@@ -14,6 +14,7 @@
     "@mdi/js": "^7.3.67",
     "@mdi/react": "^1.6.1",
     "@mui/material": "^5.14.17",
+    "@uiw/react-md-editor": "^4.0.5",
     "clsx": "^2.1.0",
     "dotenv": "^16.3.1",
     "jsonwebtoken": "^9.0.2",
