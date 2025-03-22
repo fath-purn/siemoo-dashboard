@@ -20,7 +20,7 @@ async function getData({ currentPage, limit, search }: PageLimitSearch) {
   return data.data;
 }
 
-export default async function TableLapak({
+export default function TableLapak({
   currentPage,
   limit,
   search,
@@ -32,7 +32,7 @@ export default async function TableLapak({
   const [dataLapak, setDataLapak] = useState<any[]>([]);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const data = await getData({ currentPage, limit, search });
       setDataLapak(data);
     }

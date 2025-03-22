@@ -73,6 +73,8 @@ export async function formDeleteHandler({
   params: string;
 }) {
   try {
+    toast.info("Loading...");
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/${params}/${id}`,
       {
@@ -89,6 +91,7 @@ export async function formDeleteHandler({
       window.location.href = `/dashboard/${params}`;
       return code;
     } else {
+      toast.error(code.message);
       return {
         success: false,
         message: "Gagal Update wisata tolong cek field kembali",
@@ -335,7 +338,7 @@ export async function formSubmitHandlerFile(
 
     if (code && "success" in code && code.success === true) {
       toast.success(code.message);
-      window.location.href = `/admin/${code.params}`;
+      window.location.href = `/dashboard/penyakit`;
       return code;
     }
 

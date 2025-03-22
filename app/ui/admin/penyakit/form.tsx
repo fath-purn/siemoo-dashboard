@@ -29,7 +29,7 @@ export default function LoginForm() {
       
       const token = localStorage.getItem("token");
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cocoblog/upload-gambar`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/cocoblog/upload-gambar`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,8 +37,10 @@ export default function LoginForm() {
         body: formData,
       });
 
+      
       const data = await response.json();
-      return data.data.gambar.url;
+      console.log("res", data.data.gambar.link);
+      return data.data.gambar.link;
     } catch (error) {
       console.error("Error uploading image:", error);
       throw error;

@@ -323,8 +323,6 @@ export const UPDATELAPAK = async (_provider: string, data: any) => {
 };
 
 export const POSTFILE = async (_provider: string, data: any) => {
-  console.log("data", data);
-
   const { id_update, params } = data;
   const validasi = cocoblog.safeParse({
     judul: data.judul,
@@ -365,8 +363,8 @@ export const POSTFILE = async (_provider: string, data: any) => {
 
   if (validasi.success) {
     const url = id_update
-      ? `${process.env.NEXT_PUBLIC_API_URL}/${params}/${id_update}`
-      : `${process.env.NEXT_PUBLIC_API_URL}/${params}`;
+      ? `${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/${params}/${id_update}`
+      : `${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/${params}`;
     const res = await fetch(url, {
       method: id_update ? "PUT" : "POST",
       headers: {
@@ -376,10 +374,6 @@ export const POSTFILE = async (_provider: string, data: any) => {
     });
 
     const dataJson = await res.json();
-
-    console.log(url);
-    console.log("image", data.image.size)
-    console.log("res:", dataJson);
 
     if (!res) {
       return { ...dataJson, params };

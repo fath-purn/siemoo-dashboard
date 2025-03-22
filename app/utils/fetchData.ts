@@ -1,4 +1,4 @@
-"use server";
+'use client'
 
 export async function getData({
   path,
@@ -13,9 +13,10 @@ export async function getData({
   search?: string;
   status?: string;
 }) {
+  console.log('masuk fetch data')
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}${path}?search=${search}&status=${status}&page=${currentPage}&limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_URL_SIEMOO}${path}?search=${search}`,
     {
       cache: "no-store",
       headers: {

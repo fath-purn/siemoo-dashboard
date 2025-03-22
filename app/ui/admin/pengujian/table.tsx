@@ -29,7 +29,7 @@ async function getData({ currentPage, limit, search }: PageLimitSearch) {
   return data.data;
 }
 
-export default async function TableUser({
+export default function TableUser({
   currentPage,
   limit,
   search,
@@ -41,10 +41,14 @@ export default async function TableUser({
   const [dataPengujian, setDataPengujian] = useState<any[]>([]);
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await getData({ currentPage, limit, search });
-      setDataPengujian(data);
-    }
+    const fetchData = async () => {
+      try {
+        const data = await getData({ currentPage, limit, search });
+        setDataPengujian(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
     fetchData();
   }, [currentPage, limit, search]);
