@@ -1,4 +1,4 @@
-import { artikel, kelompok, lapak, pengujian, cocoblog } from "@/app/utils/validation";
+import { artikel, kelompok, lapak, pengujian, cocoblog, klinik } from "@/app/utils/validation";
 
 export const POSTARTIKEL = async (_provider: string, data: any) => {
   const validasi = artikel.safeParse({
@@ -323,68 +323,74 @@ export const UPDATELAPAK = async (_provider: string, data: any) => {
 };
 
 export const POSTFILE = async (_provider: string, data: any) => {
+  console.log('masuk')
   const { id_update, params } = data;
-  const validasi = cocoblog.safeParse({
-    judul: data.judul,
-    isi: data.isi,
-  });
+
+  let validasi;
+
+  if (params === "cocoblog") {
+    validasi = cocoblog.safeParse({
+      judul: data.judul,
+      isi: data.isi,
+    });
+  } else if (params === "klinik") {
+    validasi = klinik.safeParse({
+      nama: data.nama,
+      alamat: data.alamat,
+      telepon: data.telepon,
+      maps: data.maps,
+      seninSabtu: data.seninSabtu,
+      minggu: data.minggu,
+    });
+  } else {
+    return { success: false, message: "Invalid params" };
+  }
 
   if (!validasi.success) {
-    console.log(validasi.error.issues, "hmm bisa gasihh");
-  }
-
-  let formData = new FormData();
-
-  if (data.image.size !== 0) {
-    formData.append(`image`, data.image);
-  } else if (data.linkGambar) {
-    formData.append("linkGambar", "linkgambar");
-  } else {
-    formData.append("linkGambar", "linkgambar");
-  }
-
-  // Handle different cases
-  switch (params) {
-    case "cocoblog":
-      formData.append("judul", data.judul);
-      formData.append("isi", data.isi);
-      break;
-
-    case "produk":
-      formData.append("nama", data.nama);
-      formData.append("deskripsi", data.deskripsi);
-      formData.append("link", data.link);
-      break;
-
-    default:
-      console.error("Invalid params:", params);
-      return { success: false, message: "Invalid params" };
-  }
-
-  if (validasi.success) {
-    const url = id_update
-      ? `${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/${params}/${id_update}`
-      : `${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/${params}`;
-    const res = await fetch(url, {
-      method: id_update ? "PUT" : "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: formData, // FormData
-    });
-
-    const dataJson = await res.json();
-
-    if (!res) {
-      return { ...dataJson, params };
-    }
-
-    if (res.status === 200 || res.status === 201) {
-      return { ...dataJson, params };
-    } else {
-      return { ...dataJson, params };
-    }
-  } else {
     return { success: false, message: validasi.error.issues };
   }
+
+  const formData = new FormData();
+
+  // Gambar
+  if (data.image && data.image.size !== 0) {
+    formData.append("image", data.image);
+  } else if (data.linkGambar) {
+    formData.append("linkGambar", data.linkGambar);
+  }
+
+  // Append field berdasarkan params
+  if (params === "cocoblog") {
+    formData.append("judul", data.judul);
+    formData.append("isi", data.isi);
+  } else if (params === "klinik") {
+    formData.append("nama", data.nama);
+    formData.append("alamat", data.alamat);
+    formData.append("telepon", data.telepon);
+    formData.append("id_kota", "1");
+    formData.append("maps", data.maps);
+    formData.append("seninSabtu", data.seninSabtu);
+    formData.append("minggu", data.minggu);
+  }
+
+  const url = id_update
+    ? `${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/${params}/${id_update}`
+    : `${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/${params}`;
+
+  const res = await fetch(url, {
+    method: id_update ? "PUT" : "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: formData,
+  });
+
+  const result = await res.json();
+
+  return {
+    ...result,
+    success: res.ok,
+    params,
+  };
 };
+

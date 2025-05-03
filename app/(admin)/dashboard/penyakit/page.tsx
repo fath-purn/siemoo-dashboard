@@ -3,7 +3,7 @@ import Card from "@/app/ui/admin/penyakit/card";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cocoblog",
+  title: "Penyakit",
 };
 
 export default async function Page(props: {

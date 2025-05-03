@@ -32,3 +32,12 @@ export const cocoblog = z.object({
     judul: z.string().min(1, { message: "Judul harus diisi" }),
     isi: z.string().min(1, { message: "Deksripsi harus diisi" }),
   });
+
+  export const klinik = z.object({
+    nama: z.string().min(1, { message: "Nama harus diisi" }),
+    alamat: z.string().min(1, { message: "Alamat harus diisi" }),
+    telepon: z.string().min(1, { message: "No Telepon harus diisi" }),
+    maps: z.string().min(1, { message: "Maps harus diisi" }),
+    seninSabtu: z.string().min(1, { message: "Maps harus diisi" }),
+    minggu: z.string().min(1, { message: "Maps harus diisi" }),
+  });

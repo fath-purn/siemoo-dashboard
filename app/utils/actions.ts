@@ -333,12 +333,19 @@ export async function formSubmitHandlerFile(
 > {
   try {
     toast.info("Loading...");
+  console.log('masuk')
 
     const code = await POSTFILE("POSTFILE", Object.fromEntries(formData));
 
+  console.log('code', code);
+
     if (code && "success" in code && code.success === true) {
-      toast.success(code.message);
-      window.location.href = `/dashboard/penyakit`;
+      toast.success(`Berhasil ditambah ${code.params}`);
+      if(code.params === "cocoblog") {
+        window.location.href = `/dashboard/penyakit`;
+      } else {
+        window.location.href = `/dashboard/${code.params}`;
+      }
       return code;
     }
 
@@ -352,9 +359,7 @@ export async function formSubmitHandlerFile(
       }
     }
 
-    console.log("empat");
-
-    toast.success(code.message);
+    toast.success("Berhasil ditambah");
     return { success: false, message: code.message };
   } catch (error) {
     toast.error("Form submission failed");

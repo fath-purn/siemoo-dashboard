@@ -12,6 +12,7 @@ import {
   mdiTestTube,
   mdiStoreOutline,
   mdiHospital,
+  mdiHospitalBuilding,
 } from "@mdi/js";
 
 // Map of links to display in the side navigation.
@@ -39,6 +40,11 @@ const links = [
     name: "Penyakit",
     href: "/dashboard/penyakit",
     icon: mdiHospital ,
+  },
+  {
+    name: "Klinik",
+    href: "/dashboard/klinik",
+    icon: mdiHospitalBuilding,
   },
 ];
 

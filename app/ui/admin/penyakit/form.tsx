@@ -29,7 +29,7 @@ export default function LoginForm() {
       
       const token = localStorage.getItem("token");
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/cocoblog/upload-gambar`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL_SIEMOO}/penyakit/upload-gambar`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -86,7 +86,7 @@ export default function LoginForm() {
   return (
     <form action={action} className="space-y-3">
       <div className="flex-1  mr-5 p-10 md:mr-8 bg-white rounded-lg">
-        <h1 className={`mb-3 text-2xl`}>Tambah Cocoblog</h1>
+        <h1 className={`mb-3 text-2xl`}>Tambah Penyakit</h1>
         <div className="w-full">
           <div>
             <label

@@ -6,7 +6,7 @@ import {
 } from "@mdi/js";
 import { getData } from "@/app/utils/fetchData";
 
-interface Cocoblog {
+interface Penyakit {
   id: number;
   judul: string;
   isi: string;
@@ -37,7 +37,7 @@ export default async function Card({
   return (
     <div>
       <div className="grid grid-cols-1 text-left md:grid-cols-2 lg:grid-cols-4 justify-items-center items-center m-auto w-full mt-5 gap-3">
-        {cocoblogList?.map((data: Cocoblog, index: number) => {
+        {cocoblogList?.map((data: Penyakit, index: number) => {
           return (
             <div
               key={index}

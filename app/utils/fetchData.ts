@@ -13,8 +13,6 @@ export async function getData({
   search?: string;
   status?: string;
 }) {
-  console.log('masuk fetch data')
-
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL_SIEMOO}${path}?search=${search}`,
     {

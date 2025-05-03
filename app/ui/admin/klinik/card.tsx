@@ -8,11 +8,13 @@ import { useState, useEffect } from "react";
 import { getData } from "@/app/utils/fetchData";
 import { formDeleteHandler } from "@/app/utils/actions";
 
-interface Penyakit {
+interface Klinik {
   id: number;
-  judul: string;
-  isi: string;
-  gambar: string;
+  nama: string;
+  alamat: string;
+  telepon: string;
+  media: string;
+  kota: string;
 }
 
 export default function Card({
@@ -24,15 +26,14 @@ export default function Card({
   currentPage: number;
   search: string;
 }) {
-  const [penyakitList, setPenyakitList] = useState<Penyakit[]>([]);
-  const [totalItems, setTotalItems] = useState<number>(0);
+  const [klinikList, setKlinikList] = useState<Klinik[]>([]);
   const [result, setResult] = useState(null);
 
   const handleDelete = async (id: number, params: string) => {
     const result = await formDeleteHandler({ id, params });
     setResult(result);
     if (result.success) {
-      setPenyakitList(penyakitList.filter((petani) => petani.id !== id));
+      setKlinikList(klinikList.filter((petani) => petani.id !== id));
     }
   };
 
@@ -40,14 +41,13 @@ export default function Card({
     const fetchData = async () => {
       try {
         const data = await getData({
-          path: "/cocoblog",
+          path: "/klinik",
           limit: limit,
           currentPage: currentPage,
           search: search,
         });
 
-        setPenyakitList(data.cocoblog);
-        setTotalItems(Math.ceil(data.pagination.total_items / limit));
+        setKlinikList(data);
       } catch (error) {
         console.error(error);
       }
@@ -57,38 +57,37 @@ export default function Card({
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-items-center items-center m-auto w-full mt-5 gap-3">
-        {penyakitList ? (
-          penyakitList?.map((data, index) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center items-center m-auto w-full mt-5 gap-3">
+        {klinikList ? (
+          klinikList?.map((data, index) => (
             <div
               key={index}
-              className="flex flex-row justify-start md:flex-col w-full bg-white rounded-lg shadow-md mt-3 h-full"
+              className="flex flex-row justify-start w-full bg-white rounded-lg shadow-md mt-3 h-full"
             >
-              {data.gambar && (
+              {data.media && (
                 <Image
-                  src={data.gambar}
-                  alt={data.judul}
+                  src={data.media}
+                  alt={data.nama}
                   width={237}
                   height={200}
-                  className="object-cover rounded-lg w-full h-[200px] "
+                  className="object-cover rounded-lg w-[237px] min-h-[200px]"
                 />
               )}
-              <div className="flex items-center justify-center my-3 ml-1 md:ml-0 w-[50%] md:w-full">
+              <div className="flex flex-col justify-between my-5 mx-3 w-full">
                 <div className="w-[90%]">
                   <h3 className="text-black text-xl font-medium mb-3">
-                    {data.judul}
+                    {data.nama}
                   </h3>
+                  <p className="text-gray-500 text-sm mb-2 line-clamp-2">{data.alamat}</p>
+                  <p className="text-gray-500 text-sm mb-2">{data.telepon}</p>
+                  <p className="text-gray-500 text-sm mb-2">{data.kota}</p>
                 </div>
-              </div>
-              <div className="mt-auto flex justify-center mb-3">
-                <div className="w-[90%] flex gap-2">
                   <button
                     className="bg-red-500 hover:bg-red-700 text-white font-bold w-fit p-1 rounded"
-                    onClick={() => handleDelete(data.id, "cocoblog")}
+                    onClick={() => handleDelete(data.id, "klinik")}
                   >
                     <Icon path={mdiDeleteOutline} size={1} color="#fff" />
                   </button>
-                </div>
               </div>
             </div>
           ))
